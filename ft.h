@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:10:19 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 20:10:27 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool			is_valid_position(char **map, int col, int row, t_info *info);
 bool			can_expand_horizontally_vertically(char **map, t_tempcrs *p_tempcrs, t_info *info);
 void			find_largest_square(char **map, t_tempcrs *p_tempcrs, t_info *p_info);
 void			ft_make_map(char **map, t_info *p_info);
-void			set_bsq(t_bsq *p_bsq);
+void			set_bsq(t_bsq *p_bsq, int max, int col, int row);
 int				ft_map_colsize(char **map);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:10:42 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 20:10:13 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,11 @@ void	find_largest_square(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
 	{
 		p_tempcrs->size++;
 	}
-	if (g_max < p_tempcrs->size)
-	{
-		g_max = p_tempcrs->size;
-		g_col = p_tempcrs->col;
-		g_row = p_tempcrs->row;
-	}
 }
 
-void	set_bsq(t_bsq *p_bsq)
+void	set_bsq(t_bsq *p_bsq, int max, int col, int row)
 {
-	p_bsq->x = g_col;
-	p_bsq->y = g_row;
-	p_bsq->size = g_max;
+	p_bsq->x = col;
+	p_bsq->y = row;
+	p_bsq->size = max;
 }

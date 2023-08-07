@@ -6,15 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 17:28:07 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 20:08:52 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
-
-int g_col;
-int g_row;
-int g_max;
 
 void	ft_free(char ***map)
 {

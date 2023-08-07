@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 19:06:24 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 20:11:08 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_put_map(char **map, t_info *p_info)
 	}
 }
 
-void	draw_square(char **map, t_info *p_info)
+void	draw_square(char **map, t_info *p_info, int max, int col, int row)
 {
 	int		i;
 	int		j;
@@ -39,13 +39,13 @@ void	draw_square(char **map, t_info *p_info)
 
 	i = 0;
 	p_bsq = malloc(sizeof(t_bsq));
-	set_bsq(p_bsq);
-	while (i < g_max)
+	set_bsq(p_bsq, max, col, row);
+	while (i < max)
 	{
 		j = 0;
-		while (j < g_max)
+		while (j < max)
 		{
-			map[g_row + i][g_col + j] = p_info->full;
+			map[row + i][col + j] = p_info->full;
 			j++;
 		}
 		i++;
@@ -72,9 +72,9 @@ void	ft_make_map(char **map, t_info *info)
 {
 	t_tempcrs *p_tempcrs;
 
-	g_max = 0;
-	g_col = 0;
-	g_row = 0;
+	int max = 0;
+	int col = 0;
+	int row = 0;
 	p_tempcrs = malloc(sizeof(t_tempcrs));
 	set_tempcrs(p_tempcrs);
 	while (p_tempcrs->row <= info->num_rows)
@@ -86,12 +86,18 @@ void	ft_make_map(char **map, t_info *info)
 			p_tempcrs->row, info) == 1)
 			{
 				find_largest_square(map, p_tempcrs, info);
+				if (max < p_tempcrs->size)
+				{
+					max = p_tempcrs->size;
+					col = p_tempcrs->col;
+					row = p_tempcrs->row;
+				}
 			}
 			p_tempcrs->col++;
 		}
 		p_tempcrs->row++;
 	}
-	draw_square(map, info);
+	draw_square(map, info, max, col, row);
 	free(p_tempcrs);
 	return ;
 }
