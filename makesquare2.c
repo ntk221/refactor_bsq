@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 20:31:24 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 20:38:30 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ void	draw_square(char **map, t_info *info, t_bsq *p_bsq)
 	return ;
 }
 
-void	set_tempcrs(t_tempcrs *p_tempcrs)
+void	set_map_cursor(t_map_cursor *map_cursor)
 {
-	p_tempcrs->row = 1;
-	p_tempcrs->col = 0;
-	p_tempcrs->size = 0;
+	map_cursor->row = 1;
+	map_cursor->col = 0;
+	map_cursor->size = 0;
 }
 
 /**
@@ -67,39 +67,39 @@ void	set_tempcrs(t_tempcrs *p_tempcrs)
  */
 void	ft_make_map(char **map, t_info *info)
 {
-	t_tempcrs *p_tempcrs;
+	t_map_cursor *map_cursor;
 	int max = 0;
 	int col = 0;
 	int row = 0;
 	t_bsq	*p_bsq;
 	
-	p_tempcrs = malloc(sizeof(t_tempcrs));
-	set_tempcrs(p_tempcrs);
-	while (p_tempcrs->row <= info->num_rows)
+	map_cursor = malloc(sizeof(t_map_cursor));
+	set_map_cursor(map_cursor);
+	while (map_cursor->row <= info->num_rows)
 	{
-		p_tempcrs->col = 0;
-		while (p_tempcrs->col < ft_map_colsize(map))
+		map_cursor->col = 0;
+		while (map_cursor->col < ft_map_colsize(map))
 		{
-			if (is_valid_position(map, p_tempcrs->col,
-			p_tempcrs->row, info) == 1)
+			if (is_valid_position(map, map_cursor->col,
+			map_cursor->row, info) == 1)
 			{
-				find_largest_square(map, p_tempcrs, info);
-				if (max < p_tempcrs->size)
+				find_largest_square(map, map_cursor, info);
+				if (max < map_cursor->size)
 				{
-					max = p_tempcrs->size;
-					col = p_tempcrs->col;
-					row = p_tempcrs->row;
+					max = map_cursor->size;
+					col = map_cursor->col;
+					row = map_cursor->row;
 					break;
 				}
 			}
-			p_tempcrs->col++;
+			map_cursor->col++;
 		}
-		p_tempcrs->row++;
+		map_cursor->row++;
 	}
 	p_bsq = malloc(sizeof(t_bsq));
 	set_bsq(p_bsq, max, col, row);
 	draw_square(map, info, p_bsq);
 	free(p_bsq);
-	free(p_tempcrs);
+	free(map_cursor);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 20:10:13 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 20:40:09 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,30 @@ bool	is_valid_position(char **map, int col, int row, t_info *info)
  * 途中で障害物にぶつかったらfalseを返す
  * 
  * @param map 
- * @param p_tempcrs 
+ * @param map_cursor
  * @param info 
  * @return true 
  * @return false 
  */
-bool	can_expand_horizontally_vertically(char **map, t_tempcrs *p_tempcrs, t_info *info)
+bool	can_expand_horizontally_vertically(char **map, t_map_cursor *map_cursor, t_info *info)
 {
 	int i;
 
 	i = 0;
-	while (i <= p_tempcrs->size)
+	while (i <= map_cursor->size)
 	{
-		if (!is_valid_position(map, p_tempcrs->col + i,
-		p_tempcrs->row + p_tempcrs->size, info))
+		if (!is_valid_position(map, map_cursor->col + i,
+		map_cursor->row + map_cursor->size, info))
 		{
 			return (false);
 		}
 		i++;
 	}
 	i = 0;
-	while (i <= p_tempcrs->size)
+	while (i <= map_cursor->size)
 	{
-		if (!is_valid_position(map, p_tempcrs->col + p_tempcrs->size,
-		p_tempcrs->row + i, info))
+		if (!is_valid_position(map, map_cursor->col + map_cursor->size,
+		map_cursor->row + i, info))
 			return (false);
 		i++;
 	}
@@ -90,15 +90,15 @@ bool	can_expand_horizontally_vertically(char **map, t_tempcrs *p_tempcrs, t_info
  * @brief map内の指定された位置から、一片がsize分の長さの正方形を描けるかを判定する
  * 
  * @param map 
- * @param p_tempcrs 
- * @param p_info 
+ * @param map_cursor
+ * @param info 
  */
-void	find_largest_square(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
+void	find_largest_square(char **map, t_map_cursor *map_cursor, t_info *p_info)
 {
-	p_tempcrs->size = 0;
-	while (can_expand_horizontally_vertically(map, p_tempcrs, p_info))
+	map_cursor->size = 0;
+	while (can_expand_horizontally_vertically(map, map_cursor, p_info))
 	{
-		p_tempcrs->size++;
+		map_cursor->size++;
 	}
 }
 

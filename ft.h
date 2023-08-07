@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 20:10:27 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 20:38:02 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ typedef	struct	s_info
 }				t_info;
 
 // col, row, sizeをまとめた構造体
-typedef	struct	s_tempcrs
+typedef	struct	s_map_cursor
 {
 	int	col;
 	int	row;
 	int	size;
-}				t_tempcrs;
+}				t_map_cursor;
 
 extern int				g_max;
 extern int				g_col;
@@ -66,10 +66,10 @@ int				validate_map_header(char **map);
 t_info			*ft_parse(char **map);
 int				ft_validate(char **map, t_info *info);
 int				validate_content_end(char *content);
-void			set_tempcrs(t_tempcrs *p_tempcrs);
+void			set_map_cursor(t_map_cursor *map_cursor);
 bool			is_valid_position(char **map, int col, int row, t_info *info);
-bool			can_expand_horizontally_vertically(char **map, t_tempcrs *p_tempcrs, t_info *info);
-void			find_largest_square(char **map, t_tempcrs *p_tempcrs, t_info *p_info);
+bool			can_expand_horizontally_vertically(char **map, t_map_cursor *p_tempcrs, t_info *info);
+void			find_largest_square(char **map, t_map_cursor *p_tempcrs, t_info *p_info);
 void			ft_make_map(char **map, t_info *p_info);
 void			set_bsq(t_bsq *p_bsq, int max, int col, int row);
 int				ft_map_colsize(char **map);
