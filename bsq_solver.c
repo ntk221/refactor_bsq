@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:19:45 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:48:35 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	draw_square(char **map, t_info *info, t_bsq *p_bsq)
 
 /**
  * @brief map上を探索するカーソルを初期化する
- * 探索する行の最初はヘッダーを飛ばした行から始める
+ * 探索する行の最初はヘッダーを飛ばした行から始めるので row = 1になる
  * 
  * @param map_cursor 
  */
@@ -65,7 +65,7 @@ static void	set_map_cursor(t_map_cursor *map_cursor)
 }
 
 /**
- * @brief 最大の正方形の座標を検索し、max, col, rowにセットする
+ * @brief 最大の正方形の座標を検索し、t_bsqのポインタ型で返す
  * 
  * @param map 
  * @param info 
@@ -102,7 +102,7 @@ static t_bsq	*find_largest_square_coordinates(char **map, t_info *info,
 }
 
 /**
- * @brief mapとその情報を受け取り、最大の正方形を探して、その正方形の部分をfullに変える 
+ * @brief マップの最大の正方形を検索し、その座標をdraw_squareに渡す
  * 
  * @param map 
  * @param p_info 

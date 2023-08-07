@@ -73,7 +73,8 @@ static char	*get_content_from_file(char *filename)
 }
 
 /**
- * @brief fileを読み込んでmapを作成する
+ * @brief fileを読み込んでmapを作成し、solve_bsqに渡す
+ * return値は、成功か失敗かを表す
  * 
  * @param argc 
  * @param argv 

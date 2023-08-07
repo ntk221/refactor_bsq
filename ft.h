@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:32:18 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:46:32 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ typedef struct s_info
 	char	full;
 }				t_info;
 
-// col, row, sizeをまとめた構造体
+/**
+ * @brief map上を探索するカーソル
+ * 
+ */
 typedef struct s_map_cursor
 {
 	int	col;
