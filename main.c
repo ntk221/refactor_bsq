@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 20:08:52 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 20:41:58 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ int		validate_content_end(char *content)
 	return (SUCCESS);
 }
 
+/**
+ * @brief コマンドライン引数にファイルを指定されない場合は標準入力から読み込む
+ * 
+ * @return int 
+ */
 int		process_stdin(void)
 {
 	char	*content;
@@ -73,10 +78,8 @@ int		process_stdin(void)
 		return (FAIL);
 	map = ft_split(content, "\n");
 	free(content);
-	// map の validation
 	if (validate_map_header(map) == FAIL)
 		return (FAIL);
-	// map の parse
 	if (!(info = ft_parse(map)))
 		return (FAIL);
 	if (ft_validate(map, info) == FAIL)
