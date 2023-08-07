@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 17:24:10 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:57:10 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void			ft_putchar(char c);
 void			ft_putstr(char *str);
 void			ft_puterror(char *str);
 int				ft_strlen(char *str);
+int				ft_is_in_charset(char c, char *charset);
 char			**ft_split(char *str, char *charset);
 int				ft_is_printable(char c);
 char			*ft_strdup(char *src);

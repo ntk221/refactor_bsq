@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   tmp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:59:31 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 18:01:08 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:53:37 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include <stdlib.h>
 
-static int			g_word_index = 0;
-static int			g_start = 0;
-static int			g_end = 0;
+static int	g_word_index = 0;
+static int	g_start = 0;
+static int	g_end = 0;
 
-enum				e_state
-{
+static enum e_state	{
 	WORD_OUT,
 	WORD_IN
 };
-
-static enum e_state	g_state;
 
 /**
  * @brief charsetで区切られた単語の数を返す
