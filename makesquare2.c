@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 20:11:08 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 20:31:24 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,24 @@ void	ft_put_map(char **map, t_info *p_info)
 	}
 }
 
-void	draw_square(char **map, t_info *p_info, int max, int col, int row)
+void	draw_square(char **map, t_info *info, t_bsq *p_bsq)
 {
 	int		i;
 	int		j;
-	t_bsq	*p_bsq;
 
 	i = 0;
-	p_bsq = malloc(sizeof(t_bsq));
-	set_bsq(p_bsq, max, col, row);
-	while (i < max)
+
+	while (i < p_bsq->size)
 	{
 		j = 0;
-		while (j < max)
+		while (j < p_bsq->size)
 		{
-			map[row + i][col + j] = p_info->full;
+			map[p_bsq->y + i][p_bsq->x + j] = info->full;
 			j++;
 		}
 		i++;
 	}
-	ft_put_map(map, p_info);
-	free(p_bsq);
+	ft_put_map(map, info);
 	return ;
 }
 
@@ -71,10 +68,11 @@ void	set_tempcrs(t_tempcrs *p_tempcrs)
 void	ft_make_map(char **map, t_info *info)
 {
 	t_tempcrs *p_tempcrs;
-
 	int max = 0;
 	int col = 0;
 	int row = 0;
+	t_bsq	*p_bsq;
+	
 	p_tempcrs = malloc(sizeof(t_tempcrs));
 	set_tempcrs(p_tempcrs);
 	while (p_tempcrs->row <= info->num_rows)
@@ -91,13 +89,17 @@ void	ft_make_map(char **map, t_info *info)
 					max = p_tempcrs->size;
 					col = p_tempcrs->col;
 					row = p_tempcrs->row;
+					break;
 				}
 			}
 			p_tempcrs->col++;
 		}
 		p_tempcrs->row++;
 	}
-	draw_square(map, info, max, col, row);
+	p_bsq = malloc(sizeof(t_bsq));
+	set_bsq(p_bsq, max, col, row);
+	draw_square(map, info, p_bsq);
+	free(p_bsq);
 	free(p_tempcrs);
 	return ;
 }
