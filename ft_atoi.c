@@ -6,17 +6,17 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 18:51:43 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 12:26:26 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 21:19:48 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isspace(char c)
 {
-	if (c == ' ' ||
-		c == '\n' ||
-		c == '\t' ||
-		c == '\v' ||
-		c == '\f' ||
+	if (c == ' ' || \
+		c == '\n' || \
+		c == '\t' || \
+		c == '\v' || \
+		c == '\f' || \
 		c == '\r')
 	{
 		return (1);
@@ -29,9 +29,9 @@ int	ft_isspace(char c)
 
 int	ft_atoi(char *str)
 {
-	int res;
-	int sign;
-	int i;
+	int	res;
+	int	sign;
+	int	i;
 
 	res = 0;
 	sign = 0;

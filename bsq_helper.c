@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpmakesquare.c                                   :+:      :+:    :+:   */
+/*   bsq_helper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 20:40:09 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 21:11:58 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft.h"
 
-int		ft_map_colsize(char **map)
+int	ft_map_colsize(char **map)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (map[1][count])
@@ -61,15 +60,16 @@ bool	is_valid_position(char **map, int col, int row, t_info *info)
  * @return true 
  * @return false 
  */
-bool	can_expand_horizontally_vertically(char **map, t_map_cursor *map_cursor, t_info *info)
+bool	can_expand_horizontally_vertically(char **map, t_map_cursor *map_cursor,
+		t_info *info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i <= map_cursor->size)
 	{
-		if (!is_valid_position(map, map_cursor->col + i,
-		map_cursor->row + map_cursor->size, info))
+		if (!is_valid_position(map, map_cursor->col + i, map_cursor->row
+				+ map_cursor->size, info))
 		{
 			return (false);
 		}
@@ -79,7 +79,7 @@ bool	can_expand_horizontally_vertically(char **map, t_map_cursor *map_cursor, t_
 	while (i <= map_cursor->size)
 	{
 		if (!is_valid_position(map, map_cursor->col + map_cursor->size,
-		map_cursor->row + i, info))
+				map_cursor->row + i, info))
 			return (false);
 		i++;
 	}
@@ -93,7 +93,8 @@ bool	can_expand_horizontally_vertically(char **map, t_map_cursor *map_cursor, t_
  * @param map_cursor
  * @param info 
  */
-void	find_largest_square(char **map, t_map_cursor *map_cursor, t_info *p_info)
+void	find_largest_square(char **map, t_map_cursor *map_cursor,
+		t_info *p_info)
 {
 	map_cursor->size = 0;
 	while (can_expand_horizontally_vertically(map, map_cursor, p_info))
@@ -102,9 +103,15 @@ void	find_largest_square(char **map, t_map_cursor *map_cursor, t_info *p_info)
 	}
 }
 
-void	set_bsq(t_bsq *p_bsq, int max, int col, int row)
+t_bsq	*init_bsq(void)
 {
-	p_bsq->x = col;
-	p_bsq->y = row;
-	p_bsq->size = max;
+	t_bsq	*p_bsq;
+
+	p_bsq = (t_bsq *)malloc(sizeof(t_bsq));
+	if (p_bsq == NULL)
+		exit(EXIT_FAILURE);
+	p_bsq->x = 0;
+	p_bsq->y = 0;
+	p_bsq->size = 0;
+	return (p_bsq);
 }

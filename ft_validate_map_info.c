@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_validate_map.c                                  :+:      :+:    :+:   */
+/*   ft_validate_map_info.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 16:38:47 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 21:33:39 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-static int		validate_map_has_info(char **map, t_info *info)
+static int	validate_map_has_info(char **map, t_info *info)
 {
 	if (!(map[0] && map[1]))
 		return (FAIL);
-	if (!(map[1][0] == info->empty ||
-			map[1][0] == info->obstacle ||
+	if (!(map[1][0] == info->empty || \
+			map[1][0] == info->obstacle || \
 			map[1][0] == info->full))
 		return (FAIL);
 	return (SUCCESS);
 }
 
-static int		validate_map_cells(char **map, t_info *info)
+/**
+ * @brief infoに記載されている空白、障害物、の文字がmapに含まれているかを確認する
+ * 
+ * @param map 
+ * @param info 
+ * @return int 
+ */
+static int	validate_map_cells(char **map, t_info *info)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map[++i])
@@ -41,10 +48,10 @@ static int		validate_map_cells(char **map, t_info *info)
 	return (SUCCESS);
 }
 
-static int		validate_map_rows_length(char **map, t_info *info)
+static int	validate_map_rows_length(char **map, t_info *info)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 1;
 	len = ft_strlen(map[i]);
@@ -59,7 +66,7 @@ static int		validate_map_rows_length(char **map, t_info *info)
 	return (SUCCESS);
 }
 
-int		ft_validate(char **map, t_info *info)
+int	validate_map_info(char **map, t_info *info)
 {
 	if (validate_map_has_info(map, info) == FAIL)
 		return (FAIL);

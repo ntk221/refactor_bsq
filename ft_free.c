@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/29 13:41:41 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 21:22:49 by kazuki           ###   ########.fr       */
+/*   Created: 2023/08/07 21:40:17 by kazuki            #+#    #+#             */
+/*   Updated: 2023/08/07 22:18:16 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+void	ft_free(char ***map)
 {
-	char	*res;
-	int		i;
-	int		j;
-	int		size;
+	long int	i;
 
-	size = ft_strlen(s1) + ft_strlen(s2) + 1;
-	res = malloc(sizeof(char) * size);
-	if (!res)
-		return (NULL);
 	i = 0;
-	while (s1[i])
+	while ((*map)[i])
 	{
-		res[i] = s1[i];
+		free((*map)[i]);
 		i++;
 	}
-	j = 0;
-	while (s2[j])
-		res[i++] = s2[j++];
-	res[i] = '\0';
-	return (res);
+	free(*map);
+	*map = NULL;
 }

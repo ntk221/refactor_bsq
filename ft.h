@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 20:38:02 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:22:23 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@
 # define FAIL 0
 # define FT_ERR_MAP "map error\n"
 
-typedef	struct	s_bsq
+typedef struct s_bsq
 {
 	int			x;
 	int			y;
 	int			size;
 }				t_bsq;
 
-typedef	struct	s_info
+typedef struct s_info
 {
 	int		num_rows;
 	char	empty;
@@ -42,16 +42,14 @@ typedef	struct	s_info
 }				t_info;
 
 // col, row, sizeをまとめた構造体
-typedef	struct	s_map_cursor
+typedef struct s_map_cursor
 {
 	int	col;
 	int	row;
 	int	size;
 }				t_map_cursor;
 
-extern int				g_max;
-extern int				g_col;
-extern int				g_row;
+void			ft_free(char ***map);
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
 void			ft_puterror(char *str);
@@ -64,14 +62,15 @@ char			*ft_strjoin(char *s1, char *s2);
 int				ft_atoi(char *str);
 int				validate_map_header(char **map);
 t_info			*ft_parse(char **map);
-int				ft_validate(char **map, t_info *info);
+int				validate_map_info(char **map, t_info *info);
 int				validate_content_end(char *content);
-void			set_map_cursor(t_map_cursor *map_cursor);
 bool			is_valid_position(char **map, int col, int row, t_info *info);
-bool			can_expand_horizontally_vertically(char **map, t_map_cursor *p_tempcrs, t_info *info);
-void			find_largest_square(char **map, t_map_cursor *p_tempcrs, t_info *p_info);
-void			ft_make_map(char **map, t_info *p_info);
-void			set_bsq(t_bsq *p_bsq, int max, int col, int row);
+bool			can_expand_horizontally_vertically(char **map, t_map_cursor \
+													*p_tempcrs, t_info *info);
+void			find_largest_square(char **map, t_map_cursor *p_tempcrs, \
+																t_info *p_info);
+void			solve_bsq(char **map, t_info *p_info);
+t_bsq			*init_bsq(void);
 int				ft_map_colsize(char **map);
 
 #endif
