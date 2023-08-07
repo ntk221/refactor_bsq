@@ -24,24 +24,25 @@ t_info	*ft_parse(char **map)
 	char	*line;
 	int		len;
 	int		i;
-	char	*info_chunk;
+	char	*num_row;
 
 	line = map[0];
 	len = ft_strlen(line);
 	info = malloc(sizeof(t_info *));
 	if (info == NULL)
 		exit(EXIT_FAILURE);
-	info_chunk = malloc(sizeof(char) * (len - 3) + 1);
-	if (info_chunk == NULL)
+	num_row = malloc(sizeof(char) * (len - 3) + 1);
+	if (num_row == NULL)
 		exit(EXIT_FAILURE);
 	i = -1;
 	while (++i < len - 3)
-		info_chunk[i] = line[i];
-	info_chunk[i] = '\0';
-	info->num_rows = ft_atoi(info_chunk);
+		num_row[i] = line[i];
+	num_row[i] = '\0';
+	i = -1;
+	info->num_rows = ft_atoi(num_row);
 	info->empty = line[len - 3];
 	info->obstacle = line[len - 2];
 	info->full = line[len - 1];
-	free(info_chunk);
+	free(num_row);
 	return (info);
 }
