@@ -2,14 +2,14 @@
 use warnings;
 use strict;
 
-die "Usage: $0 x y density\n" unless (scalar(@ARGV) == 3);
+die "program x y density\n" unless (scalar(@ARGV) == 3);
 
 my ($x, $y, $density) = @ARGV;
 
 print "$y.ox\n";
 for (my $i = 0; $i < $y; $i++) {
     for (my $j = 0; $j < $x; $j++) {
-        if (int(rand($y) * 2) < $density) {
+        if (int(rand($y)) < $density) {
             print "o";
         } else {
             print ".";

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utility.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:44:48 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/29 22:46:31 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:58:52 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ int		ft_strlen(char *str)
 	return (i);
 }
 
+/**
+ * @brief 0x20(space)から0x7e(~)までの文字かどうかを判定する
+ * ASCIIコード表を参照
+ * 
+ * @param c 
+ * @return int 
+ */
 int		ft_is_printable(char c)
 {
 	if (c < 0x20 || c == 0x7f)

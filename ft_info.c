@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_info.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/30 06:37:38 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 16:16:18 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,36 @@ int		ft_validate_5(char **map)
 	return (SUCCESS);
 }
 
-t_info	*ft_prse(char **map)
+/**
+ * @brief mapの最初の行から、行数、空白、障害物、fullの情報を取得する
+ * 
+ * @param map 
+ * @return t_info* 
+ */
+t_info	*ft_parse(char **map)
 {
 	t_info	*info;
 	char	*line;
 	int		len;
 	int		i;
-	char	*num;
+	char	*info_chunk;
 
 	line = map[0];
 	len = ft_strlen(line);
 	info = malloc(sizeof(t_info *));
-	num = malloc(sizeof(char) * (len - 3) + 1);
+	if (info == NULL)
+		exit(EXIT_FAILURE);
+	info_chunk = malloc(sizeof(char) * (len - 3) + 1);
+	if (info_chunk == NULL)
+		exit(EXIT_FAILURE);
 	i = -1;
 	while (++i < len - 3)
-		num[i] = line[i];
-	num[i] = '\0';
-	info->num_rows = ft_atoi(num);
+		info_chunk[i] = line[i];
+	info_chunk[i] = '\0';
+	info->num_rows = ft_atoi(info_chunk);
 	info->empty = line[len - 3];
 	info->obstacle = line[len - 2];
 	info->full = line[len - 1];
-	free(num);
+	free(info_chunk);
 	return (info);
 }

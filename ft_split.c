@@ -3,21 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 15:59:31 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/30 00:56:51 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 16:19:02 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include <stdlib.h>
 
-int		g_word_index = 0;
-int		g_start = 0;
-int		g_end = 0;
-int		g_state = 0;
+static int		g_word_index = 0;
+static int		g_start = 0;
+static int		g_end = 0;
 
-int		ft_is_in_charset(char c, char *charset)
+static enum	e_state
+{
+	WORD_OUT,
+	WORD_IN
+}			g_state;
+
+static int		ft_is_in_charset(char c, char *charset)
 {
 	int i;
 
@@ -31,20 +36,27 @@ int		ft_is_in_charset(char c, char *charset)
 	return (0);
 }
 
-int		ft_get_wc(char *str, char *charset)
+/**
+ * @brief charsetで区切られた単語の数を返す
+ * g_stateを適切に切り替えることによって、区切り文字の連続を一つの区切り文字として扱っている
+ * 
+ * @param str 
+ * @param charset 
+ * @return int 
+ */
+static int		ft_get_wc(char *str, char *charset)
 {
 	int wc;
-	int state;
 
 	wc = 0;
-	state = OUT;
+	g_state = WORD_OUT;
 	while (*str)
 	{
 		if (ft_is_in_charset(*str, charset))
-			state = OUT;
-		else if (state == OUT)
+			g_state = WORD_OUT;
+		else if (g_state == WORD_OUT)
 		{
-			state = IN;
+			g_state = WORD_IN;
 			++wc;
 		}
 		++str;
@@ -52,23 +64,48 @@ int		ft_get_wc(char *str, char *charset)
 	return (wc);
 }
 
-void	ft_update_in_word(int i)
+/**
+ * @brief g_stateによって、word pointerのstartとendを更新する
+ * g_stateが入力状態の場合、単語の終端位置を進める
+ * 
+ * @param i 
+ */
+static void	ft_update_in_word(int i)
 {
-	if (g_state == OUT)
+	if (g_state == WORD_OUT)
 	{
-		g_state = IN;
+		g_state = WORD_IN;
 		g_start = i;
-		g_end = i;
+		g_end = i; 
 	}
 	else
-		g_end = i;
+		g_end = i;	
 }
 
-void	ft_add_last_word(char **res, char *str, int i)
+/**
+ * @brief strからwordを読み込んで、resに追加する
+ * 
+ * @param res 
+ * @param str 
+ */
+static void ft_add_word_to_result(char **res, char *str)
+{
+    int j = -1;
+    res[g_word_index] = malloc(sizeof(char) * ((g_end - g_start) + 1));
+    if (!res[g_word_index])
+        exit(EXIT_FAILURE);
+    while (g_start <= g_end)
+        res[g_word_index][++j] = str[g_start++];
+    res[g_word_index][++j] = '\0';
+    g_word_index++;
+}
+
+
+static void	ft_add_last_word(char **res, char *str, int i)
 {
 	int j;
 
-	if (g_state == IN)
+	if (g_state == WORD_IN)
 	{
 		res[g_word_index] = malloc(sizeof(char) * ((i - g_start) + 1));
 		j = -1;
@@ -78,37 +115,69 @@ void	ft_add_last_word(char **res, char *str, int i)
 		g_word_index++;
 	}
 	res[g_word_index] = 0;
-	g_word_index = 0;
-	g_start = 0;
-	g_end = 0;
-	g_state = 0;
 }
 
 char	**ft_split(char *str, char *charset)
 {
 	char	**res;
 	int		i;
-	int		j;
 
 	res = malloc(sizeof(char *) * (ft_get_wc(str, charset) + 1));
+	if (!res)
+		exit(EXIT_FAILURE);
 	i = -1;
 	while (str[++i])
 	{
 		if (ft_is_in_charset(str[i], charset))
 		{
-			if (g_state == OUT)
-				continue;
-			g_state = OUT;
-			res[g_word_index] = malloc(sizeof(char) * ((g_end - g_start) + 1));
-			j = -1;
-			while (g_start <= g_end)
-				res[g_word_index][++j] = str[g_start++];
-			res[g_word_index][++j] = '\0';
-			g_word_index++;
+			if (g_state == WORD_OUT)
+				continue ;
+			g_state = WORD_OUT;
+			ft_add_word_to_result(res, str);
 		}
 		else
 			ft_update_in_word(i);
 	}
 	ft_add_last_word(res, str, i);
+	g_word_index = 0;
+	g_start = 0;
+	g_end = 0;
 	return (res);
+} 
+
+/*int main() {
+    char *str = "abc def ghi";
+    char *charset = " ";
+    char **res = ft_split(str, charset);
+    int i = 0;
+    while (res[i]) {
+        printf("%s\n", res[i]);
+        i++;
+    }
+
+    i = 0;
+    while (res[i]) {
+        free(res[i]);
+        i++;
+    }
+    free(res);
+
+    char *str2 = "def ghi jkl";
+    char *charset2 = " ";
+    char **res2 = ft_split(str2, charset2);
+    int i2 = 0;
+    while (res2[i2]) {
+        printf("%s\n", res2[i2]);
+        i2++;
+    }
+ 
+    i2 = 0;
+    while (res2[i2]) {
+        free(res2[i2]);
+        i2++;
+    }
+    free(res2);
+
+    return 0;
 }
+*/

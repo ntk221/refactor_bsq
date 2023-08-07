@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_validate_map.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:48:35 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/30 07:19:14 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 16:38:47 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-int		ft_validate_1(char **map, t_info *info)
+static int		validate_map_has_info(char **map, t_info *info)
 {
 	if (!(map[0] && map[1]))
 		return (FAIL);
@@ -23,7 +23,7 @@ int		ft_validate_1(char **map, t_info *info)
 	return (SUCCESS);
 }
 
-int		ft_validate_2(char **map, t_info *info)
+static int		validate_map_cells(char **map, t_info *info)
 {
 	int i;
 	int j;
@@ -41,7 +41,7 @@ int		ft_validate_2(char **map, t_info *info)
 	return (SUCCESS);
 }
 
-int		ft_validate_3(char **map, t_info *info)
+static int		validate_map_rows_length(char **map, t_info *info)
 {
 	int i;
 	int len;
@@ -59,25 +59,13 @@ int		ft_validate_3(char **map, t_info *info)
 	return (SUCCESS);
 }
 
-int		ft_validate_4(char *content)
-{
-	int		i;
-
-	i = 0;
-	while (content[i] != '\0')
-		i++;
-	if (content[i - 1] != '\n')
-		return (FAIL);
-	return (SUCCESS);
-}
-
 int		ft_validate(char **map, t_info *info)
 {
-	if (ft_validate_1(map, info) == FAIL)
+	if (validate_map_has_info(map, info) == FAIL)
 		return (FAIL);
-	if (ft_validate_2(map, info) == FAIL)
+	if (validate_map_cells(map, info) == FAIL)
 		return (FAIL);
-	if (ft_validate_3(map, info) == FAIL)
+	if (validate_map_rows_length(map, info) == FAIL)
 		return (FAIL);
 	return (SUCCESS);
 }

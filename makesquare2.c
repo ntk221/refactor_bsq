@@ -3,58 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   makesquare2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louisnop <louisnop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2020/01/30 02:37:11 by louisnop         ###   ########.fr       */
+/*   Updated: 2023/08/07 17:22:31 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
-
-extern	int g_max;
-extern	int g_col;
-extern	int g_row;
-
-int		ft_check_2(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
-{
-	int i;
-
-	i = 0;
-	while (i <= p_tempcrs->size)
-	{
-		if (ft_check_1(map, p_tempcrs->col + i,
-		p_tempcrs->row + p_tempcrs->size, p_info) == 0)
-		{
-			return (0);
-		}
-		i++;
-	}
-	i = 0;
-	while (i <= p_tempcrs->size)
-	{
-		if (ft_check_1(map, p_tempcrs->col + p_tempcrs->size,
-		p_tempcrs->row + i, p_info) == 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	ft_check_3(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
-{
-	p_tempcrs->size = 0;
-	while (ft_check_2(map, p_tempcrs, p_info) == 1)
-	{
-		p_tempcrs->size++;
-	}
-	if (g_max < p_tempcrs->size)
-	{
-		g_max = p_tempcrs->size;
-		g_col = p_tempcrs->col;
-		g_row = p_tempcrs->row;
-	}
-}
 
 void	ft_put_map(char **map, t_info *p_info)
 {
