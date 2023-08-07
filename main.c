@@ -6,32 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:17:27 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:32:49 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
-
-char	*ft_read(int ifd)
-{
-	char	*content;
-	char	buf[FT_BUFSIZ + 1];
-	int		n;
-
-	content = NULL;
-	n = read(ifd, buf, FT_BUFSIZ);
-	while (n > 0)
-	{
-		buf[n] = '\0';
-		if (content == NULL)
-			content = ft_strdup(buf);
-		else
-			content = ft_strjoin(content, buf);
-		n = read(ifd, buf, FT_BUFSIZ);
-	}
-	return (content);
-}
-
 
 /**
  * @brief 入力内容が改行で終わっているか確認する
@@ -47,21 +26,6 @@ int	validate_content_end(char *content)
 	while (content[i] != '\0')
 		i++;
 	if (content[i - 1] != '\n')
-		return (FAIL);
-	return (SUCCESS);
-}
-
-int validate_content_and_header(int ifds)
-{
-	char	*content;
-	char	**map;
-
-	content = ft_read(ifds);
-	if (validate_content_end(content) == FAIL)
-		return (FAIL);
-	map = ft_split(content, "\n");
-	free(content);
-	if (validate_map_header(map) == FAIL)
 		return (FAIL);
 	return (SUCCESS);
 }
@@ -95,6 +59,19 @@ int	process_stdin(void)
 	return (SUCCESS);
 }
 
+static char	*get_content_from_file(char *filename)
+{
+	int		ifd;
+	char	*content;
+
+	ifd = open(filename, O_RDONLY);
+	if (ifd == -1)
+		return (NULL);
+	content = ft_read(ifd);
+	close(ifd);
+	return (content);
+}
+
 /**
  * @brief fileを読み込んでmapを作成する
  * 
@@ -105,18 +82,15 @@ int	process_stdin(void)
  */
 int	process_file(int argc, char *argv[], int i)
 {
-	int		ifd;
 	char	*content;
 	char	**map;
 	t_info	*info;
 
-	ifd = open(argv[i], O_RDONLY);
-	if (ifd == -1)
+	content = get_content_from_file(argv[i]);
+	if (!content)
 		return (FAIL);
-	content = ft_read(ifd);
 	if (validate_content_end(content) == FAIL)
 		return (FAIL);
-	close(ifd);
 	map = ft_split(content, "\n");
 	free(content);
 	if (validate_map_header(map) == FAIL)
@@ -132,7 +106,7 @@ int	process_file(int argc, char *argv[], int i)
 	ft_free(&map);
 	free(info);
 	return (SUCCESS);
-} 
+}
 
 int	main(int argc, char *argv[])
 {

@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:22:23 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 22:32:18 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_map_cursor
 }				t_map_cursor;
 
 void			ft_free(char ***map);
+char			*ft_read(int ifd);
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
 void			ft_puterror(char *str);
