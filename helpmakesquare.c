@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 17:23:01 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:10:42 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,59 +25,78 @@ int		ft_map_colsize(char **map)
 	return (count);
 }
 
-void	set_tempcrs(t_tempcrs *p_tempcrs)
-{
-	p_tempcrs->row = 1;
-	p_tempcrs->col = 0;
-	p_tempcrs->size = 0;
-}
-
-int		ft_check_1(char **map, int col, int row, t_info *p_info)
+/**
+ * @brief col, rowで指定された位置が、map内であるか、また障害物でないかを判定する。
+ * 
+ * @param map 
+ * @param col 
+ * @param row 
+ * @param info 
+ * @return bool
+ */
+bool	is_valid_position(char **map, int col, int row, t_info *info)
 {
 	if (col == ft_map_colsize(map))
 	{
-		return (0);
+		return (false);
 	}
-	if (row == p_info->num_rows + 1)
+	if (row == info->num_rows + 1)
 	{
-		return (0);
+		return (false);
 	}
-	if (map[row][col] == p_info->obstacle || map[row][col] == '\0')
+	if (map[row][col] == info->obstacle || map[row][col] == '\0')
 	{
-		return (0);
+		return (false);
 	}
-	return (1);
+	return (true);
 }
 
-int		ft_check_2(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
+/**
+ * @brief 指定された位置から、水平方向、垂直方向にsize分だけ拡張できるかを判定する
+ * 途中で障害物にぶつかったらfalseを返す
+ * 
+ * @param map 
+ * @param p_tempcrs 
+ * @param info 
+ * @return true 
+ * @return false 
+ */
+bool	can_expand_horizontally_vertically(char **map, t_tempcrs *p_tempcrs, t_info *info)
 {
 	int i;
 
 	i = 0;
 	while (i <= p_tempcrs->size)
 	{
-		if (ft_check_1(map, p_tempcrs->col + i,
-		p_tempcrs->row + p_tempcrs->size, p_info) == 0)
+		if (!is_valid_position(map, p_tempcrs->col + i,
+		p_tempcrs->row + p_tempcrs->size, info))
 		{
-			return (0);
+			return (false);
 		}
 		i++;
 	}
 	i = 0;
 	while (i <= p_tempcrs->size)
 	{
-		if (ft_check_1(map, p_tempcrs->col + p_tempcrs->size,
-		p_tempcrs->row + i, p_info) == 0)
-			return (0);
+		if (!is_valid_position(map, p_tempcrs->col + p_tempcrs->size,
+		p_tempcrs->row + i, info))
+			return (false);
 		i++;
 	}
-	return (1);
+	return (true);
 }
 
-void	ft_check_3(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
+/**
+ * @brief map内の指定された位置から、一片がsize分の長さの正方形を描けるかを判定する
+ * 
+ * @param map 
+ * @param p_tempcrs 
+ * @param p_info 
+ */
+void	find_largest_square(char **map, t_tempcrs *p_tempcrs, t_info *p_info)
 {
 	p_tempcrs->size = 0;
-	while (ft_check_2(map, p_tempcrs, p_info) == 1)
+	while (can_expand_horizontally_vertically(map, p_tempcrs, p_info))
 	{
 		p_tempcrs->size++;
 	}

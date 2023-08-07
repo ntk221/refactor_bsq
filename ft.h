@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 17:57:10 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:10:19 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <libgen.h>
+# include <stdbool.h>
 
 # define FT_BUFSIZ 320000
 # define IN 1
@@ -40,6 +41,7 @@ typedef	struct	s_info
 	char	full;
 }				t_info;
 
+// col, row, sizeをまとめた構造体
 typedef	struct	s_tempcrs
 {
 	int	col;
@@ -65,9 +67,9 @@ t_info			*ft_parse(char **map);
 int				ft_validate(char **map, t_info *info);
 int				validate_content_end(char *content);
 void			set_tempcrs(t_tempcrs *p_tempcrs);
-int				ft_check_1(char **map, int col, int row, t_info *p_info);
-int				ft_check_2(char **map, t_tempcrs *p_tempcrs, t_info *p_info);
-void			ft_check_3(char **map, t_tempcrs *p_tempcrs, t_info *p_info);
+bool			is_valid_position(char **map, int col, int row, t_info *info);
+bool			can_expand_horizontally_vertically(char **map, t_tempcrs *p_tempcrs, t_info *info);
+void			find_largest_square(char **map, t_tempcrs *p_tempcrs, t_info *p_info);
 void			ft_make_map(char **map, t_info *p_info);
 void			set_bsq(t_bsq *p_bsq);
 int				ft_map_colsize(char **map);
