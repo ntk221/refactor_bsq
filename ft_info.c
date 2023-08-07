@@ -6,38 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 22:47:47 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 16:16:18 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:35:17 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
-
-int		ft_validate_5(char **map)
-{
-	int		len;
-	char	*line;
-	int		i;
-
-	if (!map[0])
-		return (FAIL);
-	line = map[0];
-	len = ft_strlen(line);
-	if (len < 4)
-		return (FAIL);
-	i = -1;
-	while (++i < len - 3)
-		if (!(line[i] >= '0' && line[i] <= '9'))
-			return (FAIL);
-	if (!(ft_is_printable(line[len - 1]) &&
-				ft_is_printable(line[len - 2]) &&
-				ft_is_printable(line[len - 3])))
-		return (FAIL);
-	if (line[len - 1] == line[len - 2] ||
-			line[len - 2] == line[len - 3] ||
-			line[len - 3] == line[len - 1])
-		return (FAIL);
-	return (SUCCESS);
-}
 
 /**
  * @brief mapの最初の行から、行数、空白、障害物、fullの情報を取得する

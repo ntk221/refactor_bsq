@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:36:38 by kazuki            #+#    #+#             */
-/*   Updated: 2023/08/07 17:47:14 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:38:08 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
  */
 int	validate_map_header(char **map)
 {
-	int		len;
-	char	*header;
-	int		i;
+	int len;
+	char *header;
+	int i;
 
 	if (!map[0])
 		return (FAIL);
@@ -34,12 +34,12 @@ int	validate_map_header(char **map)
 	while (++i < len - 3)
 		if (!(header[i] >= '0' && header[i] <= '9'))
 			return (FAIL);
-	if (!(ft_is_printable(header[len - 1]) && \
-			ft_is_printable(header[len - 2]) && \
+	if (!(ft_is_printable(header[len - 1]) &&
+			ft_is_printable(header[len - 2]) &&
 			ft_is_printable(header[len - 3])))
 		return (FAIL);
-	if (header[len - 1] == header[len - 2] || \
-		header[len - 2] == header[len - 3] || \
+	if (header[len - 1] == header[len - 2] ||
+		header[len - 2] == header[len - 3] ||
 		header[len - 3] == header[len - 1])
 		return (FAIL);
 	return (SUCCESS);

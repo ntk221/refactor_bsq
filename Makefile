@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: louisnop <louisnop@student.42.fr>          +#+  +:+       +#+         #
+#    By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2020/01/30 06:37:02 by louisnop         ###   ########.fr        #
+#    Updated: 2023/08/07 17:34:48 by kazuki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 TARGET = bsq
-SRCS = main.c ft_puts.c ft_utility.c ft_strdup.c ft_strjoin.c ft_split.c ft_atoi.c ft_info.c ft_validate_map.c makesquare2.c helpmakesquare.c ft_validate_header.c
-OBJS = main.o ft_puts.o ft_utility.o ft_strdup.o ft_strjoin.o ft_split.o ft_atoi.o ft_info.o ft_validate_map.o makesquare2.o helpmakesquare.o ft_validate_header.o
+SRCS = main.c ft_puts.c ft_utility.c ft_strdup.c ft_strjoin.c ft_split.c ft_atoi.c ft_info.c ft_validate_map_info.c makesquare2.c helpmakesquare.c ft_validate_header.c
+OBJS = main.o ft_puts.o ft_utility.o ft_strdup.o ft_strjoin.o ft_split.o ft_atoi.o ft_info.o ft_validate_map_info.o makesquare2.o helpmakesquare.o ft_validate_header.o
 
 all: $(TARGET)
 
