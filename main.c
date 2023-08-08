@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:32:49 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/08 16:18:29 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,27 @@ static char	*get_content_from_file(char *filename)
 	return (content);
 }
 
+int check_precondition(char *arg, char ***map, t_info **info)
+{
+	char	*content;
+
+	content = get_content_from_file(arg);
+	if (!content)
+		return (FAIL);
+	if (validate_content_end(content) == FAIL)
+		return (FAIL);
+	*map = ft_split(content, "\n");
+	free(content);
+	if (validate_map_header(*map) == FAIL)
+		return (FAIL);
+	*info = ft_parse(*map);
+	if (!info)
+		return (FAIL);
+	if (validate_map_info(*map, *info) == FAIL)
+		return (FAIL);
+	return (SUCCESS);
+}
+
 /**
  * @brief fileを読み込んでmapを作成し、solve_bsqに渡す
  * return値は、成功か失敗かを表す
@@ -83,23 +104,11 @@ static char	*get_content_from_file(char *filename)
  */
 int	process_file(int argc, char *argv[], int i)
 {
-	char	*content;
 	char	**map;
 	t_info	*info;
 
-	content = get_content_from_file(argv[i]);
-	if (!content)
-		return (FAIL);
-	if (validate_content_end(content) == FAIL)
-		return (FAIL);
-	map = ft_split(content, "\n");
-	free(content);
-	if (validate_map_header(map) == FAIL)
-		return (FAIL);
-	info = ft_parse(map);
-	if (!info)
-		return (FAIL);
-	if (validate_map_info(map, info) == FAIL)
+	int res = check_precondition(argv[i], &map, &info);
+	if (res == FAIL)
 		return (FAIL);
 	solve_bsq(map, info);
 	if (!(i + 1 == argc))
