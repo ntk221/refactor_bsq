@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_validate_content.c                              :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/07 17:36:58 by kazuki            #+#    #+#             */
-/*   Updated: 2023/08/08 16:51:05 by kazuki           ###   ########.fr       */
+/*   Created: 2022/10/06 10:14:03 by kazuki            #+#    #+#             */
+/*   Updated: 2023/08/08 16:49:22 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include <stddef.h>
 
-/**
- * @brief 入力内容が改行で終わっているか確認する
- * 
- * @param content 
- * @return int 
- */
-int	validate_content_end_with_newline(char *content)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int		i;
+	size_t	i;
 
 	i = 0;
-	while (content[i] != '\0')
-		i++;
-	if (content[i - 1] != '\n')
-		return (FAIL);
-	return (SUCCESS);
+	if (n != 0)
+	{
+		while (n > 1 && s2[i] != '\0')
+		{
+			if (s1[i] != s2[i])
+				break ;
+			i++;
+			n--;
+		}
+		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 16:29:56 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/08 17:17:17 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_map_cursor
 
 void			ft_free(char ***map);
 char			*ft_read(int ifd);
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
 void			ft_puterror(char *str);
@@ -69,9 +70,9 @@ t_info			*ft_parse(char **map);
 int				validate_map_info(char **map, t_info *info);
 int				validate_content_end_with_newline(char *content);
 bool			is_valid_position(char **map, int col, int row, t_info *info);
-bool			can_expand_horizontally_vertically(char **map, t_map_cursor \
+bool			can_expand_square(char **map, t_map_cursor \
 													*p_tempcrs, t_info *info);
-void			find_largest_square(char **map, t_map_cursor *p_tempcrs, \
+int				search_largest_square(char **map, t_map_cursor *p_tempcrs, \
 																t_info *p_info);
 void			solve_bsq(char **map, t_info *p_info);
 t_bsq			*init_bsq(void);

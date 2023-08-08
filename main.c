@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 16:41:56 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/08 16:53:17 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,39 +119,28 @@ int check_precondition(char *arg, char ***map, t_info **info)
 	return (SUCCESS);
 }
 
-char	*get_content_from(char *filename)
+/**
+ * @brief 引数が標準入力を表すときは、標準入力から読み込む
+ * それ以外のときは引数はファイルを表すのでファイルから読み込む
+ * 
+ * @param arg 
+ * @return char* 
+ */
+char	*get_content_from(char *arg)
 {
 	int		ifd;
 	char	*content;
-	char *stdin = "STDIN";
+	char	*stdin = "STDIN";
 
-	if (strcmp(filename, stdin) == 0)
+	if (ft_strncmp(arg, stdin, ft_strlen(arg)) == 0)
 	{
 		content = ft_read(0);
 		return (content);
 	}
-	ifd = open(filename, O_RDONLY);
+	ifd = open(arg, O_RDONLY);
 	if (ifd == -1)
 		return (NULL);
 	content = ft_read(ifd);
 	close(ifd);
 	return (content);
-}
-
-/**
- * @brief 入力内容が改行で終わっているか確認する
- * 
- * @param content 
- * @return int 
- */
-int	validate_content_end_with_newline(char *content)
-{
-	int	i;
-
-	i = 0;
-	while (content[i] != '\0')
-		i++;
-	if (content[i - 1] != '\n')
-		return (FAIL);
-	return (SUCCESS);
 }
