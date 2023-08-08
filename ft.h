@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 22:46:32 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/08 16:29:56 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int				ft_atoi(char *str);
 int				validate_map_header(char **map);
 t_info			*ft_parse(char **map);
 int				validate_map_info(char **map, t_info *info);
-int				validate_content_end(char *content);
+int				validate_content_end_with_newline(char *content);
 bool			is_valid_position(char **map, int col, int row, t_info *info);
 bool			can_expand_horizontally_vertically(char **map, t_map_cursor \
 													*p_tempcrs, t_info *info);

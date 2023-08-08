@@ -6,28 +6,44 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 16:18:29 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/08 16:41:56 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
+#include <string.h>
+
+int		process_stdin(void);
+int		process_file(int argc, char *argv[], int i);
+char	*get_content_from(char *arg);
+int		check_precondition(char *arg, char ***map, t_info **info);
 
 /**
- * @brief 入力内容が改行で終わっているか確認する
+ * @brief コマンドライン引数の有無によって、標準入力から読み込むか、ファイルから読み込むかを判断する
  * 
- * @param content 
+ * @param argc 
+ * @param argv 
  * @return int 
  */
-int	validate_content_end(char *content)
+int	main(int argc, char *argv[])
 {
-	int	i;
+	int	file_num;
 
-	i = 0;
-	while (content[i] != '\0')
-		i++;
-	if (content[i - 1] != '\n')
-		return (FAIL);
-	return (SUCCESS);
+	if (argc < 2)
+	{
+		if (process_stdin() == FAIL)
+			ft_puterror(FT_ERR_MAP);
+	}
+	else
+	{
+		file_num = 0;
+		while (++file_num < argc)
+		{
+			if (process_file(argc, argv, file_num) == FAIL)
+				ft_puterror(FT_ERR_MAP);
+		}
+	}
+	return (0);
 }
 
 /**
@@ -39,19 +55,10 @@ int	process_stdin(void)
 {
 	char	**map;
 	t_info	*info;
-	char	*content;
-
-	content = ft_read(STDIN_FILENO);
-	if (validate_content_end(content) == FAIL)
-		return (FAIL);
-	map = ft_split(content, "\n");
-	free(content);
-	if (validate_map_header(map) == FAIL)
-		return (FAIL);
-	info = ft_parse(map);
-	if (!info)
-		return (FAIL);
-	if (validate_map_info(map, info) == FAIL)
+	char *stdin = "STDIN";
+	
+	
+	if (check_precondition(stdin, &map, &info) == FAIL)
 		return (FAIL);
 	solve_bsq(map, info);
 	ft_free(&map);
@@ -59,27 +66,46 @@ int	process_stdin(void)
 	return (SUCCESS);
 }
 
-static char	*get_content_from_file(char *filename)
+/**
+ * @brief fileを読み込んでmapを作成し、solve_bsqに渡す
+ * return値は、成功か失敗かを表す
+ * 
+ * @param argc 
+ * @param argv 
+ * @param i 
+ * @return int 
+ */
+int	process_file(int argc, char *argv[], int file_num)
 {
-	int		ifd;
-	char	*content;
+	char	**map;
+	t_info	*info;
 
-	ifd = open(filename, O_RDONLY);
-	if (ifd == -1)
-		return (NULL);
-	content = ft_read(ifd);
-	close(ifd);
-	return (content);
+	if(check_precondition(argv[file_num], &map, &info) == FAIL)
+		return (FAIL);
+	solve_bsq(map, info);
+	if (!(file_num + 1 == argc))
+		ft_putstr("\n");
+	ft_free(&map);
+	free(info);
+	return (SUCCESS);
 }
 
+/**
+ * @brief solverに渡す前に、mapの内容が正しいか確認する
+ * 
+ * @param arg 
+ * @param map 
+ * @param info 
+ * @return int 
+ */
 int check_precondition(char *arg, char ***map, t_info **info)
 {
 	char	*content;
 
-	content = get_content_from_file(arg);
+	content = get_content_from(arg);
 	if (!content)
 		return (FAIL);
-	if (validate_content_end(content) == FAIL)
+	if (validate_content_end_with_newline(content) == FAIL)
 		return (FAIL);
 	*map = ft_split(content, "\n");
 	free(content);
@@ -93,48 +119,39 @@ int check_precondition(char *arg, char ***map, t_info **info)
 	return (SUCCESS);
 }
 
-/**
- * @brief fileを読み込んでmapを作成し、solve_bsqに渡す
- * return値は、成功か失敗かを表す
- * 
- * @param argc 
- * @param argv 
- * @param i 
- * @return int 
- */
-int	process_file(int argc, char *argv[], int i)
+char	*get_content_from(char *filename)
 {
-	char	**map;
-	t_info	*info;
+	int		ifd;
+	char	*content;
+	char *stdin = "STDIN";
 
-	int res = check_precondition(argv[i], &map, &info);
-	if (res == FAIL)
-		return (FAIL);
-	solve_bsq(map, info);
-	if (!(i + 1 == argc))
-		ft_putstr("\n");
-	ft_free(&map);
-	free(info);
-	return (SUCCESS);
+	if (strcmp(filename, stdin) == 0)
+	{
+		content = ft_read(0);
+		return (content);
+	}
+	ifd = open(filename, O_RDONLY);
+	if (ifd == -1)
+		return (NULL);
+	content = ft_read(ifd);
+	close(ifd);
+	return (content);
 }
 
-int	main(int argc, char *argv[])
+/**
+ * @brief 入力内容が改行で終わっているか確認する
+ * 
+ * @param content 
+ * @return int 
+ */
+int	validate_content_end_with_newline(char *content)
 {
 	int	i;
 
-	if (argc < 2)
-	{
-		if (process_stdin() == FAIL)
-			ft_puterror(FT_ERR_MAP);
-	}
-	else
-	{
-		i = 0;
-		while (++i < argc)
-		{
-			if (process_file(argc, argv, i) == FAIL)
-				ft_puterror(FT_ERR_MAP);
-		}
-	}
-	return (0);
+	i = 0;
+	while (content[i] != '\0')
+		i++;
+	if (content[i - 1] != '\n')
+		return (FAIL);
+	return (SUCCESS);
 }
