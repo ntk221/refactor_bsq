@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/09 01:45:04 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/09 01:56:11 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	put_map(char **map, t_info *p_info);
 static void	draw_square_to_map(char **map, t_info *info, t_bsq *p_bsq);
 static t_bsq	*get_bsq(char **map, t_info *info);
 void	solve_bsq(char **map, t_info *info);
-bool	can_expand_square(char **map, t_map_cursor *map_cursor, t_info *info);
+bool	can_expand_lines(char **map, t_map_cursor *map_cursor, t_info *info);
 
 /**
  * @brief マップの最大の正方形を検索し、その座標をdraw_squareに渡す
@@ -78,7 +78,7 @@ static t_bsq	*get_bsq(char **map, t_info *info)
 
 /**
  * @brief map内の指定された位置から、可能な最大の正方形のサイズを探索して、それを返す
- *
+ * 辺の長さ(size)を広げながら、繰り返しx軸、y軸について辺を伸ばせることを確認し続けて、描ける正方形のサイズを広げていく
  * 
  * @param map 
  * @param map_cursor
@@ -90,7 +90,7 @@ int	search_largest_square(char **map, t_map_cursor *map_cursor,
 		t_info *p_info)
 {
 	map_cursor->size = 0;
-	while (can_expand_square(map, map_cursor, p_info))
+	while (can_expand_lines(map, map_cursor, p_info))
 	{
 		map_cursor->size++;
 	}
@@ -107,7 +107,7 @@ int	search_largest_square(char **map, t_map_cursor *map_cursor,
  * @return true 
  * @return false 
  */
-bool	can_expand_square(char **map, t_map_cursor *map_cursor, t_info *info)
+bool	can_expand_lines(char **map, t_map_cursor *map_cursor, t_info *info)
 {
 	int side_length = map_cursor->size;
 
