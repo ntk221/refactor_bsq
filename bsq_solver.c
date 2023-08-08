@@ -6,16 +6,17 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 17:22:37 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/09 01:32:12 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
 
-static void	ft_put_map(char **map, t_info *p_info);
+static void	put_map(char **map, t_info *p_info);
 static void	draw_square_to_map(char **map, t_info *info, t_bsq *p_bsq);
 static t_bsq	*get_bsq(char **map, t_info *info);
 void	solve_bsq(char **map, t_info *info);
+bool	can_expand_square(char **map, t_map_cursor *map_cursor, t_info *info);
 
 /**
  * @brief マップの最大の正方形を検索し、その座標をdraw_squareに渡す
@@ -55,7 +56,7 @@ static t_bsq	*get_bsq(char **map, t_info *info)
 	while (map_cursor.row <= info->num_rows)
 	{
 		map_cursor.col = 0;
-		while (map_cursor.col < ft_map_colsize(map))
+		while (map_cursor.col < get_map_colsize(map))
 		{
 			if (is_valid_position(map, map_cursor.col, map_cursor.row,
 					info) == 1)
@@ -96,6 +97,41 @@ int	search_largest_square(char **map, t_map_cursor *map_cursor,
 	return map_cursor->size;
 }
 
+/**
+ * @brief 指定された位置から、一辺の長さがsize分の正方形が広げられるかどうかを判定する
+ * 途中で障害物にぶつかるから、map外に収まらない場合はfalseを返す
+ * 
+ * @param map 
+ * @param map_cursor
+ * @param info 
+ * @return true 
+ * @return false 
+ */
+bool	can_expand_square(char **map, t_map_cursor *map_cursor, t_info *info)
+{
+	int side_length = map_cursor->size;
+
+	int i = 0;
+	while (i <=  side_length)
+	{
+		if (!is_valid_position(map, map_cursor->col + i, map_cursor->row
+				+ side_length, info))
+		{
+			return (false);
+		}
+		i++;
+	}
+	i = 0;
+	while (i <= side_length)
+	{
+		if (!is_valid_position(map, map_cursor->col + side_length,
+				map_cursor->row + i, info))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 static void	draw_square_to_map(char **map, t_info *info, t_bsq *p_bsq)
 {
 	int	i;
@@ -112,11 +148,11 @@ static void	draw_square_to_map(char **map, t_info *info, t_bsq *p_bsq)
 		}
 		i++;
 	}
-	ft_put_map(map, info);
+	put_map(map, info);
 	return ;
 }
 
-static void	ft_put_map(char **map, t_info *p_info)
+static void	put_map(char **map, t_info *p_info)
 {
 	int	i;
 	int	j;
@@ -125,7 +161,7 @@ static void	ft_put_map(char **map, t_info *p_info)
 	while (i <= p_info->num_rows)
 	{
 		j = 0;
-		while (j < ft_map_colsize(map))
+		while (j < get_map_colsize(map))
 		{
 			write(1, &map[i][j], 1);
 			j++;

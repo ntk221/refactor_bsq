@@ -6,12 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 17:50:54 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/09 01:12:36 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft.h"
-#include <string.h>
 
 int		process_stdin(void);
 int		process_file(int argc, char *argv[], int i);
@@ -92,6 +91,8 @@ int	process_file(int argc, char *argv[], int file_num)
 
 /**
  * @brief solverに渡す前に、mapの内容が正しいか確認する
+ * 事後条件: check_preconditionが成功したら、mapとinfoは適切に用意されている
+ *         しかし、内部でmallocしているため、呼び出し側はfreeする必要がある
  * 
  * @param arg 
  * @param map 
@@ -120,7 +121,7 @@ int check_precondition(char *arg, char ***map, t_info **info)
 }
 
 /**
- * @brief 引数が標準入力を表すときは、標準入力から読み込む
+ * @brief 引数が標準入力(arg=="STDIN")を表すときは、標準入力から読み込む
  * それ以外のときは引数はファイルを表すのでファイルから読み込む
  * 
  * @param arg 

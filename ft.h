@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 17:46:57 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/09 01:31:36 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ int				search_largest_square(char **map, t_map_cursor *p_tempcrs, \
 																t_info *p_info);
 void			solve_bsq(char **map, t_info *p_info);
 t_bsq			*init_bsq(void);
-int				ft_map_colsize(char **map);
+int				get_map_colsize(char **map);
 
 #endif
