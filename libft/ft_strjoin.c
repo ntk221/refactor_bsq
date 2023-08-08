@@ -6,11 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:41:41 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/07 21:22:49 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/09 01:44:04 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "libft.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {

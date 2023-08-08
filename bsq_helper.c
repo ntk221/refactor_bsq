@@ -6,11 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/09 01:32:35 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/09 01:45:10 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
 int	get_map_colsize(char **map)
 {

@@ -6,11 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 21:40:17 by kazuki            #+#    #+#             */
-/*   Updated: 2023/08/08 17:46:47 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/09 01:44:55 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
 void	free_map(char ***map)
 {

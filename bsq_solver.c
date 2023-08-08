@@ -6,11 +6,11 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 21:46:00 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/09 01:32:12 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/09 01:45:04 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft.h"
+#include "bsq.h"
 
 static void	put_map(char **map, t_info *p_info);
 static void	draw_square_to_map(char **map, t_info *info, t_bsq *p_bsq);
