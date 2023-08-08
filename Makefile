@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 TARGET = bsq
-SRCS = main.c ft_read.c ft_free.c ft_validate_map_info.c bsq_helper.c ft_parse.c ft_validate_content.c bsq_solver.c ft_validate_header.c
+SRCS = main.c free_map.c validate_map_info.c bsq_helper.c parse_info_from_map.c validate_content.c bsq_solver.c validate_header.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = libft

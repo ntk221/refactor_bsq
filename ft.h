@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 10:30:46 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 17:17:17 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/08 17:46:57 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_map_cursor
 	int	size;
 }				t_map_cursor;
 
-void			ft_free(char ***map);
+void			free_map(char ***map);
 char			*ft_read(int ifd);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 void			ft_putchar(char c);
@@ -66,7 +66,7 @@ char			*ft_strdup(char *src);
 char			*ft_strjoin(char *s1, char *s2);
 int				ft_atoi(char *str);
 int				validate_map_header(char **map);
-t_info			*ft_parse(char **map);
+t_info			*parse_info_from_map(char **map);
 int				validate_map_info(char **map, t_info *info);
 int				validate_content_end_with_newline(char *content);
 bool			is_valid_position(char **map, int col, int row, t_info *info);

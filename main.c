@@ -6,7 +6,7 @@
 /*   By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 02:58:38 by louisnop          #+#    #+#             */
-/*   Updated: 2023/08/08 16:53:17 by kazuki           ###   ########.fr       */
+/*   Updated: 2023/08/08 17:50:54 by kazuki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	process_stdin(void)
 	if (check_precondition(stdin, &map, &info) == FAIL)
 		return (FAIL);
 	solve_bsq(map, info);
-	ft_free(&map);
+	free_map(&map);
 	free(info);
 	return (SUCCESS);
 }
@@ -85,7 +85,7 @@ int	process_file(int argc, char *argv[], int file_num)
 	solve_bsq(map, info);
 	if (!(file_num + 1 == argc))
 		ft_putstr("\n");
-	ft_free(&map);
+	free_map(&map);
 	free(info);
 	return (SUCCESS);
 }
@@ -111,7 +111,7 @@ int check_precondition(char *arg, char ***map, t_info **info)
 	free(content);
 	if (validate_map_header(*map) == FAIL)
 		return (FAIL);
-	*info = ft_parse(*map);
+	*info = parse_info_from_map(*map);
 	if (!info)
 		return (FAIL);
 	if (validate_map_info(*map, *info) == FAIL)
