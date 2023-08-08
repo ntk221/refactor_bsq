@@ -39,7 +39,6 @@ void	solve_bsq(char **map, t_info *info)
  * 
  * @param map 
  * @param info 
- * @param map_cursor 
  * @param found
  */
 static t_bsq	*get_bsq(char **map, t_info *info)
@@ -77,12 +76,14 @@ static t_bsq	*get_bsq(char **map, t_info *info)
 }
 
 /**
- * @brief map内の指定された位置から、可能な最大の正方形のサイズを探索する
- * map_cursor内で最大の正方形の座標の情報を保持している
+ * @brief map内の指定された位置から、可能な最大の正方形のサイズを探索して、それを返す
+ *
  * 
  * @param map 
  * @param map_cursor
  * @param info 
+ *
+ * @return size
  */
 int	search_largest_square(char **map, t_map_cursor *map_cursor,
 		t_info *p_info)
