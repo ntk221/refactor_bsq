@@ -20,15 +20,16 @@
  */
 int	validate_map_header(char **map)
 {
-	int		len;
-	char	*header;
-	int		i;
+	const int	header_length = 4;
+	int			len;
+	char		*header;
+	int			i;
 
 	if (!map[0])
 		return (FAIL);
 	header = map[0];
 	len = ft_strlen(header);
-	if (len < 4)
+	if (len < header_length)
 		return (FAIL);
 	i = -1;
 	while (++i < len - 3)
