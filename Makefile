@@ -1,34 +1,33 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: kazuki <kazuki@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/01/28 13:12:23 by louisnop          #+#    #+#              #
-#    Updated: 2023/08/08 16:50:44 by kazuki           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 TARGET = bsq
-SRCS = main.c ft_read.c ft_free.c ft_strncmp.c ft_strlen.c ft_puts.c ft_printable.c ft_strdup.c ft_strjoin.c ft_split.c ft_atoi.c ft_parse.c ft_validate_map_info.c ft_validate_content.c bsq_solver.c bsq_helper.c ft_validate_header.c ft_split_helper.c
-OBJS = main.o ft_read.o ft_free.o ft_strncmp.o ft_strlen.o ft_puts.o ft_printable.o ft_strdup.o ft_strjoin.o ft_split.o ft_atoi.o ft_parse.o ft_validate_map_info.o ft_validate_content.o bsq_solver.o bsq_helper.o ft_validate_header.o ft_split_helper.o
+SRCS = main.c ft_read.c ft_free.c ft_validate_map_info.c bsq_helper.c ft_parse.c ft_validate_content.c bsq_solver.c ft_validate_header.c
+OBJS = $(SRCS:.c=.o)
+
+LIBFT_DIR = libft
+LIBFT_NAME = libft.a
+LIBFT_PATH = $(LIBFT_DIR)/$(LIBFT_NAME)
+INC = -I$(LIBFT_DIR)
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
+$(TARGET): $(OBJS) $(LIBFT_PATH)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT_PATH) $(INC)
+
+$(LIBFT_PATH):
+	make -C $(LIBFT_DIR)
 
 %.c%.o:
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $< $(INC)
 
-.PHONY: all clean re
+.PHONY: all clean fclean re
 clean:
 	-rm -f $(OBJS)
+	make -C $(LIBFT_DIR) clean
 
-fclean:
-	-rm -f $(TARGET) $(OBJS)
+fclean: clean
+	-rm -f $(TARGET)
+	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
+
