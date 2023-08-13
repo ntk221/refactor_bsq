@@ -19,10 +19,6 @@ int		check_precondition(char *arg, char ***map, t_info **info);
 
 /**
  * @brief コマンドライン引数の有無によって、標準入力から読み込むか、ファイルから読み込むかを判断する
- * 
- * @param argc 
- * @param argv 
- * @return int 
  */
 int	main(int argc, char *argv[])
 {
@@ -47,8 +43,6 @@ int	main(int argc, char *argv[])
 
 /**
  * @brief コマンドライン引数にファイルを指定されない場合は標準入力から読み込む
- * 
- * @return int 
  */
 int	process_stdin(void)
 {
@@ -68,11 +62,6 @@ int	process_stdin(void)
 /**
  * @brief fileを読み込んでmapを作成し、solve_bsqに渡す
  * return値は、成功か失敗かを表す
- * 
- * @param argc 
- * @param argv 
- * @param i 
- * @return int 
  */
 int	process_file(int argc, char *argv[], int file_num)
 {
@@ -93,11 +82,6 @@ int	process_file(int argc, char *argv[], int file_num)
  * @brief solverに渡す前に、mapの内容が正しいか確認する
  * 事後条件: check_preconditionが成功したら、mapとinfoは適切に用意されている
  *         しかし、内部でmallocしているため、呼び出し側はfreeする必要がある
- * 
- * @param arg 
- * @param map 
- * @param info 
- * @return int 
  */
 int check_precondition(char *arg, char ***map, t_info **info)
 {
@@ -123,9 +107,6 @@ int check_precondition(char *arg, char ***map, t_info **info)
 /**
  * @brief 引数が標準入力(arg=="STDIN")を表すときは、標準入力から読み込む
  * それ以外のときは引数はファイルを表すのでファイルから読み込む
- * 
- * @param arg 
- * @return char* 
  */
 char	*get_content_from(char *arg)
 {
