@@ -14,9 +14,6 @@
 
 /**
  * @brief 入力内容が改行で終わっているか確認する
- * 
- * @param content 
- * @return int 
  */
 int	validate_content_end_with_newline(char *content)
 {

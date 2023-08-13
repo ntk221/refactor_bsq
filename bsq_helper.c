@@ -26,12 +26,6 @@ int	get_map_colsize(char **map)
 
 /**
  * @brief col, rowで指定された位置が、map内であるか、また障害物でないかを判定する。
- * 
- * @param map 
- * @param col 
- * @param row 
- * @param info 
- * @return bool
  */
 bool	is_valid_position(char **map, int col, int row, t_info *info)
 {

@@ -11,6 +11,23 @@
 /* ************************************************************************** */
 
 #include "bsq.h"
+static int	validate_map_has_info(char **map, t_info *info);
+static int	validate_map_cells(char **map, t_info *info);
+static int	validate_map_rows_length(char **map, t_info *info);
+
+/**
+ * @bried infoを参照して,map に関するvalidationを行う
+ */
+int	validate_map_info(char **map, t_info *info)
+{
+	if (validate_map_has_info(map, info) == FAIL)
+		return (FAIL);
+	if (validate_map_cells(map, info) == FAIL)
+		return (FAIL);
+	if (validate_map_rows_length(map, info) == FAIL)
+		return (FAIL);
+	return (SUCCESS);
+}
 
 static int	validate_map_has_info(char **map, t_info *info)
 {
@@ -25,10 +42,6 @@ static int	validate_map_has_info(char **map, t_info *info)
 
 /**
  * @brief infoに記載されている空白、障害物、の文字がmapに含まれているかを確認する
- * 
- * @param map 
- * @param info 
- * @return int 
  */
 static int	validate_map_cells(char **map, t_info *info)
 {
@@ -66,13 +79,3 @@ static int	validate_map_rows_length(char **map, t_info *info)
 	return (SUCCESS);
 }
 
-int	validate_map_info(char **map, t_info *info)
-{
-	if (validate_map_has_info(map, info) == FAIL)
-		return (FAIL);
-	if (validate_map_cells(map, info) == FAIL)
-		return (FAIL);
-	if (validate_map_rows_length(map, info) == FAIL)
-		return (FAIL);
-	return (SUCCESS);
-}

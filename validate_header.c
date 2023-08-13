@@ -17,9 +17,6 @@
  * 前提知識: mapの1行目はheader行になっていて次のような形式に従っている
  *          例: 9.ox (9は行数、.は空白、oは障害物、xはfull)
  *          ゆえに len("9.ox") - 3 は常に 空白文字 のインデックス(後ろから３番目)になるように期待される
- * 
- * @param map 
- * @return int 
  */
 int	validate_map_header(char **map)
 {

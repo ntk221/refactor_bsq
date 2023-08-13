@@ -19,10 +19,7 @@ void	solve_bsq(char **map, t_info *info);
 bool	can_expand_lines(char **map, t_map_cursor *map_cursor, t_info *info);
 
 /**
- * @brief マップの最大の正方形を検索し、その座標をdraw_squareに渡す
- * 
- * @param map 
- * @param p_info 
+ * @brief マップ上の最大の正方形を検索し、その座標をdraw_squareに渡す
  */
 void	solve_bsq(char **map, t_info *info)
 {
@@ -35,12 +32,8 @@ void	solve_bsq(char **map, t_info *info)
 }
 
 /**
- * @brief 最大の正方形の座標を検索し、t_bsqのポインタ型で返す
+ * @brief map上の最大の正方形の座標を検索し、t_bsqのポインタ型で返す
  * init_bsqでmallocしているので、呼び出し側はfoundをfreeする必要がある
- * 
- * @param map 
- * @param info 
- * @param found
  */
 static t_bsq	*get_bsq(char **map, t_info *info)
 {
@@ -79,12 +72,6 @@ static t_bsq	*get_bsq(char **map, t_info *info)
 /**
  * @brief map内の指定された位置から、可能な最大の正方形のサイズを探索して、それを返す
  * 辺の長さ(size)を広げながら、繰り返しx軸、y軸について辺を伸ばせることを確認し続けて、描ける正方形のサイズを広げていく
- * 
- * @param map 
- * @param map_cursor
- * @param info 
- *
- * @return size
  */
 int	search_largest_square(char **map, t_map_cursor *map_cursor,
 		t_info *p_info)
@@ -100,12 +87,6 @@ int	search_largest_square(char **map, t_map_cursor *map_cursor,
 /**
  * @brief 指定された位置から、一辺の長さがsize分の正方形が広げられるかどうかを判定する
  * 途中で障害物にぶつかるから、map外に収まらない場合はfalseを返す
- * 
- * @param map 
- * @param map_cursor
- * @param info 
- * @return true 
- * @return false 
  */
 bool	can_expand_lines(char **map, t_map_cursor *map_cursor, t_info *info)
 {
@@ -173,8 +154,6 @@ static void	put_map(char **map, t_info *p_info)
 
 /**
  * @brief mallocしているので、呼び出し側はfreeする必要がある
- * 
- * @return t_bsq* 
  */
 t_bsq	*init_bsq(void)
 {
